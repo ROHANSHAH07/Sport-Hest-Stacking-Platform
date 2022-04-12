@@ -1,1 +1,1 @@
-# Sport-Hest-Stacking-Platform-
+# Sport-Hest-Stacking-Platform
