@@ -8,6 +8,10 @@ import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,13 +20,25 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     SigninComponent,
     SignupComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:JwtInterceptor,
+      multi: true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
